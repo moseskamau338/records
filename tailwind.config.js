@@ -1,5 +1,6 @@
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
+import { colors } from "./resources/js/theme/colors";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,26 +14,12 @@ export default {
 
     theme: {
         extend: {
-            colors: {
-                // https://m2.material.io/design/color/dark-theme.html#properties
-                dark: {
-                    50: "#383838",
-                    100: "#353535",
-                    200: "#333333",
-                    300: "#2D2D2D",
-                    400: "#2C2C2C",
-                    500: "#272727",
-                    600: "#252525",
-                    700: "#222222",
-                    800: "1E1E1E",
-                    900: "#121212",
-                },
-            },
+            colors: colors,
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
         },
     },
 
-    plugins: [forms],
+    plugins: [require("@savaryna/tailwindcss-material-symbols"), forms],
 };

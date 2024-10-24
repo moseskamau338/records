@@ -2,7 +2,7 @@
     <n-switch
         :value="isDarkMode"
         @update:value="toggleDarkMode"
-        size="large"
+        size="small"
         :rail-style="railStyle"
     >
         <template #checked-icon> 🌙 </template>
