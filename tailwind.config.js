@@ -14,12 +14,21 @@ export default {
 
     theme: {
         extend: {
-            colors: colors,
-            fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+            colors: {
+                ...colors,
+                brand: {
+                    DEFAULT: colors.indigo["900"],
+                },
             },
+            //fontFamily: {
+            //    sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+            //},
         },
     },
 
-    plugins: [require("@savaryna/tailwindcss-material-symbols"), forms],
+    plugins: [
+        require("@savaryna/tailwindcss-material-symbols"),
+        require("@tailwindcss/typography"),
+        forms,
+    ],
 };

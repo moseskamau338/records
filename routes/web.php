@@ -14,11 +14,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/test-flows', function () {
-    return Inertia::render('Flows', [
-        'foo' => 'bar',
-    ]);
-});
+Route::get('/projects', function () {
+    return Inertia::render('Projects/Index');
+})->middleware(['auth', 'verified'])->name('projects.index');
+
+Route::get('/templates', function () {
+    return Inertia::render('Templates/Index');
+})->middleware(['auth', 'verified'])->name('templates.index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

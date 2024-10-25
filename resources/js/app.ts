@@ -7,11 +7,12 @@ import { createApp, DefineComponent, h } from "vue";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
+import { colors } from "@/theme/colors";
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const appName = import.meta.env.VITE_APP_NAME || "RDS";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -28,6 +29,10 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: "#4B5563",
+        // Whether to include the default NProgress styles...
+        includeCSS: true,
+        // Whether the NProgress spinner will be shown...
+        showSpinner: true,
+        color: colors.indigo["900"],
     },
 });
