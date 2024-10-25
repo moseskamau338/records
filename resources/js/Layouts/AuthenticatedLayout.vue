@@ -26,7 +26,7 @@ const { isDarkMode } = storeToRefs(store);
 const lightThemeOverrides: GlobalThemeOverrides = {
     common: {
         primaryColor: colors.indigo[950],
-        primaryColorHover: colors.indigo[1000],
+        primaryColorHover: colors.indigo[800],
         primaryColorPressed: colors.indigo[950],
         borderColor: colors.olive[300],
     },
@@ -72,28 +72,36 @@ const links: { icon: string; name: string; url: string } = [
             >
                 <h2>LOGO</h2>
                 <div class="flex flex-col space-y-8">
-                    <Link
-                        :href="item.url"
-                        class="text-center group text-olive-900 hover:text-brand"
-                        :class="{
-                            'text-brand': $page.url.startsWith(item.url),
-                        }"
-                        v-for="item in links"
-                    >
-                        <span
-                            class="transition-all icon icon-200 text-3xl group-hover:icon-filled"
-                            :class="{
-                                'icon-filled': $page.url.startsWith(item.url),
-                            }"
-                            >{{ item.icon }}</span
+                    <template v-for="item in links">
+                        <Link
+                            :href="item.url"
+                            class="text-center group hover:text-brand"
+                            :class="[
+                                $page.url.startsWith(item.url)
+                                    ? 'text-brand'
+                                    : 'text-olive-900',
+                            ]"
                         >
-                        <span
-                            :class="{
-                                'font-medium': $page.url.startsWith(item.url),
-                            }"
-                            >{{ item.name }}</span
-                        >
-                    </Link>
+                            <span
+                                class="transition-all icon icon-200 text-3xl group-hover:icon-filled"
+                                :class="[
+                                    $page.url.startsWith(item.url)
+                                        ? 'icon-filled'
+                                        : 'icon-nofill',
+                                ]"
+                                >{{ item.icon }}</span
+                            >
+                            <span
+                                :class="{
+                                    'font-medium': $page.url.startsWith(
+                                        item.url,
+                                    ),
+                                }"
+                            >
+                                {{ item.name }}
+                            </span>
+                        </Link>
+                    </template>
                 </div>
                 <div class="text-center">
                     <span

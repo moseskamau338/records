@@ -39,7 +39,7 @@ const documentation_links = [
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-4 mt-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-8">
             <div class="col-span-8">
                 <h1 class="text-3xl">Welcome Ken</h1>
                 <p class="prose mt-4">
@@ -93,7 +93,7 @@ const documentation_links = [
                                     class="shrink-0 grow-0"
                                 >
                                     <i
-                                        class="transition-all icon icon-300 text-indigo-700 group-hover:text-brand"
+                                        class="transition-all icon icon-300 text-indigo-700 group-hover:text-brand text-3xl"
                                         >{{ item.icon }}</i
                                     >
                                 </n-avatar>
