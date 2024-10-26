@@ -75,10 +75,10 @@ const links: { icon: string; name: string; url: string } = [
                     <template v-for="item in links">
                         <Link
                             :href="item.url"
-                            class="text-center group hover:text-brand"
+                            class="text-center group hover:text-brand dark:hover:text-indigo-500"
                             :class="[
                                 $page.url.startsWith(item.url)
-                                    ? 'text-brand'
+                                    ? 'text-brand dark:text-indigo-500'
                                     : 'text-olive-900',
                             ]"
                         >
