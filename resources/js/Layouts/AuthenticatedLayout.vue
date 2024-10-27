@@ -18,6 +18,7 @@ import { useThemeStore } from "@/Stores/themeStore";
 import { storeToRefs } from "pinia";
 import { colors } from "@/theme/colors";
 import { Link } from "@inertiajs/vue3";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 
 const store = useThemeStore();
 
@@ -70,7 +71,7 @@ const links: { icon: string; name: string; url: string } = [
                 content-style="padding: 24px;"
                 content-class="!h-[100vh] flex flex-col justify-between"
             >
-                <h2>LOGO</h2>
+                <ApplicationLogo />
                 <div class="flex flex-col space-y-8">
                     <template v-for="item in links">
                         <Link

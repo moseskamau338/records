@@ -18,6 +18,8 @@ Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index'
 
 Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'view'])->middleware(['auth', 'verified'])->name('projects.view');
 
+Route::get('/projects/{id}/flow', [\App\Http\Controllers\ProjectController::class, 'flow'])->middleware(['auth', 'verified'])->name('projects.flow');
+
 
 Route::get('/templates', function () {
     return Inertia::render('Templates/Index');

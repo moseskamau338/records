@@ -17,4 +17,8 @@ class ProjectController extends Controller
     {
         return Inertia::render('Projects/View', ['id' => $id]);
     }
+     public function flow(string $id): Response
+    {
+        return Inertia::render('Projects/Flow', ['id' => $id]);
+    }
 }
