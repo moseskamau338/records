@@ -9,16 +9,13 @@ import {
     GlobalThemeOverrides,
     NInput,
     NButton,
-    NAvatar,
-    NPopover,
-    NDivider,
 } from "naive-ui";
-import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import { useThemeStore } from "@/Stores/themeStore";
 import { storeToRefs } from "pinia";
 import { colors } from "@/theme/colors";
 import { Link } from "@inertiajs/vue3";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import AccountDropdown from "@/Components/App/AccountDropdown.vue";
 
 const store = useThemeStore();
 
@@ -38,8 +35,8 @@ const lightThemeOverrides: GlobalThemeOverrides = {
 
 const darkThemeOverrides: GlobalThemeOverrides = {
     common: {
-        primaryColor: colors.indigo[600],
-        primaryColorHover: colors.indigo[800],
+        primaryColor: colors.indigo[500],
+        primaryColorHover: colors.indigo[600],
         primaryColorPressed: colors.indigo[900],
         borderColor: colors.dark[300],
     },
@@ -47,6 +44,15 @@ const darkThemeOverrides: GlobalThemeOverrides = {
         siderColor: colors.dark[800],
         color: colors.dark[900],
         headerColor: colors.dark[900],
+    },
+    Dropdown: {
+        color: colors.dark["300"],
+    },
+    Popover: {
+        color: colors.dark["500"],
+    },
+    Input: {
+        color: colors.dark["50"],
     },
 };
 
@@ -133,81 +139,7 @@ const links: { icon: string; name: string; url: string } = [
                                 >
                             </n-button>
 
-                            <n-popover trigger="click" :show-arrow="false">
-                                <template #trigger>
-                                    <n-button quaternary>
-                                        <template #icon>
-                                            <n-avatar
-                                                size="small"
-                                                class="grow-0 shrink-0"
-                                                >MK</n-avatar
-                                            >
-                                        </template>
-                                        <span class="ml-2">Moses' Team</span>
-                                    </n-button>
-                                </template>
-                                <div class="w-[250px]">
-                                    <div class="text-center">
-                                        mikes@mailinator.com
-                                    </div>
-                                    <ul class="mt-4 flex flex-col space-y-2">
-                                        <li
-                                            class="flex flex-row space-x-2 items-center"
-                                        >
-                                            <n-avatar color="#FF6928"
-                                                >MT</n-avatar
-                                            >
-                                            <span>Mikes Team</span>
-                                        </li>
-                                        <li
-                                            class="flex flex-row space-x-2 items-center"
-                                        >
-                                            <n-avatar color="#415BEF"
-                                                >MT</n-avatar
-                                            >
-                                            <span>Moses' Team</span>
-                                        </li>
-                                    </ul>
-                                    <n-button block type="primary" class="mt-4"
-                                        >+ Create team</n-button
-                                    >
-                                    <n-divider />
-
-                                    <div class="flex flex-col space-y-2">
-                                        <n-button
-                                            text
-                                            class="flex justify-start"
-                                        >
-                                            <template #icon>
-                                                <i class="icon">settings</i>
-                                            </template>
-                                            Manage Team
-                                        </n-button>
-                                        <n-button
-                                            text
-                                            class="flex justify-start"
-                                        >
-                                            <template #icon>
-                                                <i class="icon">logout</i>
-                                            </template>
-                                            Logout
-                                        </n-button>
-                                    </div>
-                                    <n-divider />
-                                    <span
-                                        class="flex flex-row space-x-2 items-center"
-                                    >
-                                        <ThemeSwitcher
-                                            v-model:is-dark-mode="isDarkMode"
-                                        />
-                                        <span>{{
-                                            isDarkMode
-                                                ? "Dark Mode"
-                                                : "Light Mode"
-                                        }}</span>
-                                    </span>
-                                </div>
-                            </n-popover>
+                            <AccountDropdown />
                         </div>
                     </n-layout-header>
                 </slot>
