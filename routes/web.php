@@ -20,6 +20,7 @@ Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'v
 
 Route::get('/projects/{id}/flow', [\App\Http\Controllers\ProjectController::class, 'flow'])->middleware(['auth', 'verified'])->name('projects.flow');
 
+Route::get('/projects/{id}/recon-stories', [\App\Http\Controllers\ProjectController::class, 'stories'])->middleware(['auth', 'verified'])->name('projects.stories');
 
 Route::get('/templates', function () {
     return Inertia::render('Templates/Index');

@@ -56,7 +56,7 @@ const darkThemeOverrides: GlobalThemeOverrides = {
     },
 };
 
-const links: { icon: string; name: string; url: string } = [
+const links: { icon: string; name: string; url: string }[] = [
     { icon: "home", name: "Home", url: "/dashboard" },
     { icon: "folder_copy", name: "Projects", url: "/projects" },
     { icon: "document_scanner", name: "Templates", url: "/templates" },
@@ -82,7 +82,7 @@ const links: { icon: string; name: string; url: string } = [
                     <template v-for="item in links">
                         <Link
                             :href="item.url"
-                            class="text-center group hover:text-brand dark:hover:text-indigo-500"
+                            class="group hover:text-brand dark:hover:text-indigo-500 flex flex-col items-center"
                             :class="[
                                 $page.url.startsWith(item.url)
                                     ? 'text-brand dark:text-indigo-500'

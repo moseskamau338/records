@@ -1,5 +1,5 @@
 // Define possible field types for the schema
-type FieldType =
+export type FieldType =
     | "text"
     | "number"
     | "select"
@@ -16,20 +16,20 @@ type FieldType =
     | "custom"; // Any other custom component
 
 // Interface for options used in select, radio fields, etc.
-interface Option {
+export interface Option {
     label: string;
     value: any;
 }
 
 // Interface for validation rules for form fields
-interface ValidationRule {
+export interface ValidationRule {
     type: string; // e.g., 'required', 'minLength', 'maxValue', 'regex', etc.
     value?: any; // Value associated with the validation rule
     message?: string; // Custom error message
 }
 
 // Interface representing each field in the schema
-interface SchemaField {
+export interface SchemaField {
     name: string; // Unique identifier for the field
     label: string; // Label displayed on the form
     type: FieldType; // Type of the form field
@@ -48,7 +48,7 @@ interface SchemaField {
 }
 
 // Interface representing the block structure
-interface Block {
+export interface Block {
     id: string; // Unique identifier for the block
     type: string; // Block type identifier (e.g., 'data-source', 'trigger', 'code', etc.)
     displayName: string; // User-friendly name of the block
@@ -61,5 +61,3 @@ interface Block {
     tags?: string[]; // Tags for searching or grouping blocks
     // Any other custom properties
 }
-
-export { FieldType, Option, ValidationRule, SchemaField, Block };

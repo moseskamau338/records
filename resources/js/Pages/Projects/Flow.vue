@@ -133,12 +133,14 @@ const exampleBlock: Block = {
                     </n-popover>
                 </div>
                 <div class="flex-1 flex flex-row space-x-2 justify-end">
-                    <n-button tertiary type="primary">
-                        <template #icon>
-                            <i class="icon icon-400">list</i>
-                        </template>
-                        Recon stories
-                    </n-button>
+                    <Link :href="`/projects/${id}/recon-stories`">
+                        <n-button tertiary type="primary">
+                            <template #icon>
+                                <i class="icon icon-400">list</i>
+                            </template>
+                            Recon stories
+                        </n-button>
+                    </Link>
                     <AccountDropdown />
                 </div>
             </n-layout-header>

@@ -12,7 +12,12 @@ const { blocks } = defineProps<Props>();
 
 <template>
     <div id="trigger-action" class="w-full relative mt-4">
-        <n-button block type="primary" ghost class="bg-indigo-50">
+        <n-button
+            block
+            type="primary"
+            ghost
+            class="bg-indigo-50 dark:!bg-dark-500"
+        >
             <template #icon>
                 <i class="icon icon-100">bolt</i>
             </template>

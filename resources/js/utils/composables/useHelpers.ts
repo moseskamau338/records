@@ -1,5 +1,5 @@
 export function useHelpers() {
-    function getInitials(name) {
+    function getInitials(name: string) {
         if (!name) {
             throw new Error("Invalid name input.");
         }
@@ -21,7 +21,7 @@ export function useHelpers() {
         }
     }
 
-    function colorFromInitials(initials) {
+    function colorFromInitials(initials: string) {
         if (initials.length !== 2) {
             throw new Error("Initials must be exactly 2 characters.");
         }
