@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px; /* Adjust to control dot spacing */
+  }
+    .dark .bg-dot-pattern{
+        background-image: radial-gradient(circle, rgb(75, 75, 75, .5) 1px, transparent 1px);
+        background-size: 20px 20px; /* Adjust to control dot spacing */
+    }
+}
