@@ -5,8 +5,11 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import {NFormItem, NInput} from "naive-ui";
 
 const form = useForm({
+    company: '',
+    domain: '',
     name: '',
     email: '',
     password: '',
@@ -14,7 +17,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('register'), {
+    form.post(route('register.store'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation');
         },
@@ -27,72 +30,27 @@ const submit = () => {
         <Head title="Register" />
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+            <n-form-item label="Company" :feedback="form.errors.company" feedback-style="color: red">
+                <n-input v-model:value="form.company" placeholder="Enter company name" :input-props="{name:'company'}" />
+            </n-form-item>
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+            <n-form-item label="Domain" :feedback="form.errors.domain" feedback-style="color: red">
+                <n-input v-model:value="form.domain" placeholder="Enter domain" :input-props="{name:'url'}">
+                    <template #suffix>records-2.test</template>
+                </n-input>
+            </n-form-item>
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+            <n-form-item label="Name" :feedback="form.errors.name" feedback-style="color: red">
+                <n-input v-model:value="form.name" placeholder="Enter a name" :input-props="{name:'name'}" />
+            </n-form-item>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+            <n-form-item label="Email" :feedback="form.errors.email" feedback-style="color: red">
+                <n-input v-model:value="form.email" placeholder="Provide an email" :input-props="{name:'email'}" />
+            </n-form-item>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
-            </div>
+            <n-form-item label="Password" :feedback="form.errors.password" feedback-style="color: red">
+                <n-input type="password" show-password-on="click" v-model:value="form.password" placeholder="Enter password" />
+            </n-form-item>
 
             <div class="mt-4 flex items-center justify-end">
                 <Link
