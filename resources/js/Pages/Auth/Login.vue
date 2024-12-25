@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import {NCheckbox, NFormItem, NInput} from "naive-ui";
 
 defineProps<{
     canResetPassword?: boolean;
@@ -36,44 +37,16 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+            <n-form-item label="Email" :feedback="form.errors.email" feedback-style="color: red">
+                <n-input v-model:value="form.email" placeholder="Enter email"/>
+            </n-form-item>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+            <n-form-item label="Password" :feedback="form.errors.password" feedback-style="color: red">
+                <n-input type="password" v-model:value="form.password" placeholder="Password" show-password-on="click"/>
+            </n-form-item>
 
             <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400"
-                        >Remember me</span
-                    >
-                </label>
+                <n-checkbox v-model:checked="form.remember" label="Remember me"/>
             </div>
 
             <div class="mt-4 flex items-center justify-end">

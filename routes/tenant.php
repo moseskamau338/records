@@ -35,8 +35,12 @@ Route::middleware([
 ])->group(function () {
     Route::get('/', function () {
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-    });
+    })->name('tenant.home');
+
+    Route::post('/teams', [\App\Http\Controllers\TeamController::class, 'store'])->name('team.store');
+
     Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index'])->middleware(['auth', 'verified'])->name('projects.index');
+    Route::get('/projects/create', [\App\Http\Controllers\ProjectController::class, 'create'])->middleware(['auth', 'verified'])->name('projects.create');
 
     Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'view'])->middleware(['auth', 'verified'])->name('projects.view');
 

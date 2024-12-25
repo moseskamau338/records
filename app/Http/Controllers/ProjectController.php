@@ -26,4 +26,9 @@ class ProjectController extends Controller
         return Inertia::render('Projects/ReconStories', ['id' => $id]);
     }
 
+     public function create(): Response
+    {
+        return Inertia::render('Projects/CreateWithTemplate');
+    }
+
 }

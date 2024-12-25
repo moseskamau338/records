@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -32,7 +33,13 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user()
+                    ? $request->user()->load('teams')->load('currentTeam') // Eager load the teams relationship
+                    : null,
+                'teamLimits' => [
+                    'max' => Team::MAX_TEAMS,
+                    'current' => Team::count(),
+                ],
             ],
         ];
     }

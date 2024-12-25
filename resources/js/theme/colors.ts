@@ -1,3 +1,5 @@
+import {  GlobalThemeOverrides } from "naive-ui";
+
 export const colors = {
     // https://m2.material.io/design/color/dark-theme.html#properties
     dark: {
@@ -53,5 +55,40 @@ export const colors = {
             1000: "rgb(0,43,183,.7725)",
             1100: "rgb(0,16,70,.8784)",
         },
+    },
+};
+
+export const lightThemeOverrides: GlobalThemeOverrides = {
+    common: {
+        primaryColor: colors.indigo[950],
+        primaryColorHover: colors.indigo[800],
+        primaryColorPressed: colors.indigo[950],
+        borderColor: colors.olive[300],
+    },
+    Layout: {
+        siderColor: "#F8FAF8",
+    },
+};
+
+export const darkThemeOverrides: GlobalThemeOverrides = {
+    common: {
+        primaryColor: colors.indigo[500],
+        primaryColorHover: colors.indigo[600],
+        primaryColorPressed: colors.indigo[900],
+        borderColor: colors.dark[300],
+    },
+    Layout: {
+        siderColor: colors.dark[800],
+        color: colors.dark[900],
+        headerColor: colors.dark[900],
+    },
+    Dropdown: {
+        color: colors.dark["300"],
+    },
+    Popover: {
+        color: colors.dark["500"],
+    },
+    Input: {
+        color: colors.dark["50"],
     },
 };

@@ -6,27 +6,27 @@ import { colors } from "@/theme/colors";
 
 const documentation_links = [
     {
-        icon: "rocket",
+        icon: "material-symbols-light:rocket-launch",
         link: "",
         title: "Getting Started Guide",
         description: "Set up your first flow and navigate the dashboard.",
     },
     {
-        icon: "conversion_path",
+        icon: "material-symbols-light:conversion-path",
         link: "",
         title: "Flow Builder Overview",
         description:
             "Learn how to create and configure flows using various blocks.",
     },
     {
-        icon: "electrical_services",
+        icon: "material-symbols-light:electrical-services",
         link: "",
         title: "Integration Setup",
         description:
             "Connect your data sources like Google Drive, OneDrive, SharePoint, and more.",
     },
     {
-        icon: "monitoring",
+        icon: "material-symbols-light:monitoring",
         link: "",
         title: "Reports and Analytics",
         description:
@@ -51,31 +51,21 @@ const documentation_links = [
                 <div class="flex flex-row space-x-2 py-8">
                     <n-button type="primary" ghost strong>
                         <template #icon>
-                            <i class="icon icon-200">add</i>
+                            <j-icon name="material-symbols:add" />
                         </template>
                         Create templates
                     </n-button>
 
                     <n-button type="primary" ghost strong>
                         <template #icon>
-                            <i class="icon icon-200">document_scanner</i>
-                        </template>
-                        Create templates
-                    </n-button>
-
-                    <n-button type="primary" ghost strong>
-                        <template #icon>
-                            <i class="icon icon-200">group</i>
+                            <j-icon name="material-symbols-light:group-outline" />
                         </template>
                         Manage team
                     </n-button>
                 </div>
 
                 <div class="mt-8">
-                    <i
-                        class="icon text-5xl icon-200 text-indigo-alpha-700 dark:text-indigo-300/60"
-                        >support</i
-                    >
+                    <j-icon name="bi:life-preserver" classes="text-indigo-alpha-700 dark:text-indigo-300/60" :size="44" />
                     <h2 class="text-md font-bold prose dark:text-olive-400">
                         Documentation
                     </h2>
@@ -87,7 +77,7 @@ const documentation_links = [
                     <div class="grid grid-cols-2 gap-4 mt-8">
                         <template v-for="item in documentation_links">
                             <div
-                                class="flex flex-row space-x-2 border border-indigo-400 dark:border-indigo-400/40 hover:border-brand dark:hover:border-indigo-400/60 p-3 rounded group transition-all"
+                                class="flex flex-row space-x-2 border border-indigo-400 dark:border-indigo-400/40 hover:border-brand dark:hover:border-indigo-400/90 p-3 rounded group transition-all"
                             >
                                 <n-avatar
                                     :color="colors.indigo.alpha['200']"
@@ -95,10 +85,7 @@ const documentation_links = [
                                     size="large"
                                     class="shrink-0 grow-0"
                                 >
-                                    <i
-                                        class="transition-all icon icon-300 text-indigo-700 group-hover:text-brand dark:group-hover:text-indigo-400/60 text-3xl"
-                                        >{{ item.icon }}</i
-                                    >
+                                    <j-icon :name="item.icon" classes="transition-all text-indigo-700 group-hover:text-brand dark:group-hover:text-indigo-400/60" />
                                 </n-avatar>
                                 <div>
                                     <h2 class="text-md font-semibold">
@@ -124,10 +111,7 @@ const documentation_links = [
                             class="bg-olive-100 dark:bg-olive-100/20"
                             :size="72"
                         >
-                            <i
-                                class="icon text-olive-1000 dark:text-olive-100 text-4xl opacity-70"
-                                >done_all</i
-                            >
+                            <j-icon name="material-symbols-light:done-all" classes="text-olive-1000 dark:text-olive-100 opacity-70" :size="36" />
                         </n-avatar>
                         <span>All caught up</span>
                     </div>

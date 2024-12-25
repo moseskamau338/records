@@ -5,10 +5,8 @@
         :options="options"
     >
         <n-button quaternary>
-            <i v-if="!isDarkMode" class="icon icon-300 text-center"
-                >light_mode</i
-            >
-            <i v-else class="icon icon-300 text-center">dark_mode</i>
+            <j-icon v-if="!isDarkMode" name="material-symbols-light:light-mode-outline" classes="text-center" />
+            <j-icon v-else name="material-symbols-light:dark-mode" classes="text-center" />
         </n-button>
     </n-popselect>
 </template>
@@ -18,26 +16,39 @@ import { h, onMounted, ref } from "vue";
 import { NButton, NPopselect } from "naive-ui";
 import { useThemeStore } from "@/Stores/themeStore";
 import { storeToRefs } from "pinia";
+import JIcon from "@/Components/App/JIcon.vue";
 
 const store = useThemeStore();
 const { toggleDarkMode, applyDarkMode } = store;
 const options = ref([
     {
         label: () =>
-            h(
-                "i",
-                { class: "icon icon-300 text-center" },
-                { default: () => "light_mode" },
-            ),
+            h('div', {class:'flex flex-row space-x-2 items-center'}, [
+                h(
+                    JIcon,
+                    { name: "material-symbols-light:light-mode", classes:'text-center' },
+                ),
+                h(
+                    'p',
+                    undefined,
+                    { default: () => "Light" },
+                ),
+            ]),
         value: false,
     },
     {
         label: () =>
-            h(
-                "i",
-                { class: "icon icon-300 text-center" },
-                { default: () => "dark_mode" },
-            ),
+            h('div', {class:'flex flex-row space-x-2 items-center'}, [
+                h(
+                    JIcon,
+                    { name: "material-symbols-light:dark-mode", classes:'text-center' },
+                ),
+                h(
+                    'p',
+                    undefined,
+                    { default: () => "Dark" },
+                ),
+            ]),
         value: true,
     },
 ]);

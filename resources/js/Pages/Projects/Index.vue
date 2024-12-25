@@ -2,6 +2,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 import { NButton, NDivider } from "naive-ui";
+import JIcon from "@/Components/App/JIcon.vue";
 
 const projects = [
     { name: "Sample bank reconciliation", id: "76543567-87654" },
@@ -27,9 +28,11 @@ const projects = [
                 </div>
             </div>
 
-            <n-button type="primary" ghost size="small"
-                >+ Create project</n-button
-            >
+            <Link href="/projects/create">
+                <n-button type="primary" ghost size="small">
+                    + Create project
+                </n-button>
+            </Link>
         </div>
         <div>
             <ul class="mt-8">
@@ -41,7 +44,7 @@ const projects = [
                         <div
                             class="flex flex-row items-center space-x-2 group-hover:text-brand dark:group-hover:text-indigo-500"
                         >
-                            <i class="icon group-hover:icon-filled">folder</i>
+                            <j-icon name="material-symbols-light:folder-outline" />
                             <span>{{ project.name }}</span>
                         </div>
                         <n-button

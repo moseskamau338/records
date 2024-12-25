@@ -2,6 +2,7 @@
 import { Head, Link } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { NBreadcrumb, NBreadcrumbItem, NButton, NEmpty } from "naive-ui";
+import JIcon from "@/Components/App/JIcon.vue";
 
 interface Props {
     id: string;
@@ -19,7 +20,7 @@ defineProps<Props>();
                 <Link href="/projects">
                     <n-button size="small" tertiary>
                         <template #icon>
-                            <i class="icon icon-300">chevron_left</i>
+                            <j-icon name="material-symbols-light:chevron-left" />
                         </template>
                     </n-button>
                 </Link>
@@ -46,14 +47,14 @@ defineProps<Props>();
                     <Link :href="`/projects/${id}/flow`">
                         <n-button tertiary type="primary">
                             <template #icon>
-                                <i class="icon icon-400">conversion_path</i>
+                                <j-icon name="material-symbols-light:conversion-path" />
                             </template>
                             Flows
                         </n-button>
                     </Link>
                     <n-button tertiary type="primary">
                         <template #icon>
-                            <i class="icon icon-400">list</i>
+                            <j-icon name="material-symbols-light:list" />
                         </template>
                         Recon stories
                     </n-button>
@@ -65,7 +66,7 @@ defineProps<Props>();
                 <span
                     class="grid place-items-center grow-0 shrink-0 h-20 w-20 rounded-full bg-olive-100 dark:bg-dark-700"
                 >
-                    <i class="icon text-5xl text-olive-700">monitoring</i>
+                    <j-icon name="material-symbols-light:monitoring" classes="text-olive-700" :size="32" />
                 </span>
                 <h2
                     class="text-olive-1000 dark:text-olive-300 text-xl font-semibold"

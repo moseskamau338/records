@@ -8,11 +8,12 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 import { colors } from "@/theme/colors";
+import JIcon from "@/Components/App/JIcon.vue";
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
-const appName = import.meta.env.VITE_APP_NAME || "RDS";
+const appName = import.meta.env.VITE_APP_NAME || "Joinery";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -24,6 +25,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .component('JIcon', JIcon)
             .use(ZiggyVue)
             .use(pinia)
             .mount(el);

@@ -21,7 +21,8 @@ export function useHelpers() {
         }
     }
 
-    function colorFromInitials(initials: string) {
+    function colorFromInitials(name: string) {
+        const initials = getInitials(name)
         if (initials.length !== 2) {
             throw new Error("Initials must be exactly 2 characters.");
         }

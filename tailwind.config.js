@@ -1,5 +1,5 @@
-import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
 import { colors } from "./resources/js/theme/colors";
 
 /** @type {import('tailwindcss').Config} */
@@ -24,8 +24,7 @@ export default {
     },
 
     plugins: [
-        require("@savaryna/tailwindcss-material-symbols"),
-        require("@tailwindcss/typography"),
+        typography,
         forms,
     ],
 };
