@@ -13,6 +13,13 @@ class Breadcrumbs
                     ['name' => 'Home', 'url' => route('home')],
                 ]
             ],
+            'projects.index' => [
+                'title' => 'Projects',
+                'crumbs' => [
+                    ['name' => 'Home', 'url' => route('home')],
+                    ['name' => 'Projects', 'url' => route('projects.index')],
+                ]
+            ],
             'projects.create' => [
                 'title' => 'Create Project',
                 'crumbs' => [

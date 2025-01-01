@@ -37,24 +37,32 @@ Route::middleware([
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
     })->name('tenant.home');
 
-    Route::post('/teams', [\App\Http\Controllers\TeamController::class, 'store'])->name('team.store');
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::post('/teams', [\App\Http\Controllers\TeamController::class, 'store'])->name('team.store');
 
-    Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index'])->middleware(['auth', 'verified'])->name('projects.index');
-    Route::get('/projects/create', [\App\Http\Controllers\ProjectController::class, 'create'])->middleware(['auth', 'verified'])->name('projects.create');
+        Route::get('/projects', [\App\Http\Controllers\ProjectController::class, 'index'])->name('projects.index');
 
-    Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'view'])->middleware(['auth', 'verified'])->name('projects.view');
+        Route::get('/projects/create', [\App\Http\Controllers\ProjectController::class, 'create'])->name('projects.create');
 
-    Route::get('/projects/{id}/flow', [\App\Http\Controllers\ProjectController::class, 'flow'])->middleware(['auth', 'verified'])->name('projects.flow');
+        Route::get('/projects/{id}', [\App\Http\Controllers\ProjectController::class, 'view'])->name('projects.view');
 
-    Route::get('/projects/{id}/recon-stories', [\App\Http\Controllers\ProjectController::class, 'stories'])->middleware(['auth', 'verified'])->name('projects.stories');
+        Route::get('/projects/{id}/flow', [\App\Http\Controllers\ProjectController::class, 'flow'])->name('projects.flow');
 
-    Route::get('/templates', function () {
-        return Inertia::render('Templates/Index');
-    })->middleware(['auth', 'verified'])->name('templates.index');
+        Route::get('/projects/{id}/recon-stories', [\App\Http\Controllers\ProjectController::class, 'stories'])->name('projects.stories');
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+        Route::get('/templates', function () {
+            return Inertia::render('Templates/Index');
+        })->name('templates.index');
+
+        Route::get('/dashboard', function () {
+            return Inertia::render('Dashboard');
+        })->name('dashboard');
+
+        // Integrations
+        Route::post('/pipedream/connect', [\App\Http\Controllers\IntegrationsController::class, 'initializeConnection']);
+
+    });
+
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

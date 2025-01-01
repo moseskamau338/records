@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'pipedream' => [
+        'client_id' => env('PIPEDREAM_CLIENT_ID'),
+        'client_secret' => env('PIPEDREAM_CLIENT_SECRET'),
+        'environment' => env('PIPEDREAM_PROJECT_ENVIRONMENT'),
+        'project_id' => env('PIPEDREAM_PROJECT_ID'),
+    ],
+
 ];

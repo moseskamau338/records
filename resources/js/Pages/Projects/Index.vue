@@ -16,18 +16,6 @@ const projects = [
 
     <AuthenticatedLayout>
         <div class="flex flex-row items-center justify-between mt-4">
-            <div class="flex flex-row items-center">
-                <div class="flex flex-row items-center space-x-2">
-                    <h1
-                        class="text-2xl font-semibold text-brand dark:text-indigo-500/60"
-                    >
-                        Projects
-                    </h1>
-                    <n-divider vertical />
-                    <span>Breadcrumb</span>
-                </div>
-            </div>
-
             <Link href="/projects/create">
                 <n-button type="primary" ghost size="small">
                     + Create project

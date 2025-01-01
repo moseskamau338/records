@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
                     : null,
                 'teamLimits' => [
                     'max' => Team::MAX_TEAMS,
-                    'current' => Team::count(),
+                    'current' => $request->user() ? Team::count() : 0,
                 ],
             ],
         ];
