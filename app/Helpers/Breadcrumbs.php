@@ -28,7 +28,13 @@ class Breadcrumbs
                     ['name' => 'Create', 'url' => route('projects.create')],
                 ]
             ],
-
+            'connections.index' => [
+                'title' => 'Connections',
+                'crumbs' => [
+                    ['name' => 'Home', 'url' => route('home')],
+                    ['name' => 'Connections', 'url' => route('connections.index')],
+                ]
+            ],
         ];
 
         return $breadcrumbs[$routeName] ?? [];

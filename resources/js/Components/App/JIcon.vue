@@ -55,7 +55,7 @@ const load = async (name: string) => {
     const res = await loadIcon(name)
     return res
   } catch (e) {
-    console.error(`[specta-iconify] failed to load icon ${name}`)
+    console.error(`[jointer-iconify] failed to load icon ${name}`)
   } finally {
     loading.value = false
   }

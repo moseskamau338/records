@@ -26,10 +26,8 @@ const {isDarkMode} = storeToRefs(store);
 const links: { icon: string; name: string; url: string }[] = [
     {icon: "home", name: "Home", url: "/dashboard"},
     {icon: "folder-copy", name: "Projects", url: "/projects"},
-    {icon: "document-scanner", name: "Templates", url: "/templates"},
+    {icon: "power-plug", name: "Connections", url: "/connections"},
 ];
-
-// getCurrentInstance()?.appContext?.app?.config?.globalProperties?.['$route'] = route
 
 </script>
 

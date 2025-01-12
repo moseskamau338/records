@@ -50,16 +50,20 @@ Route::middleware([
 
         Route::get('/projects/{id}/recon-stories', [\App\Http\Controllers\ProjectController::class, 'stories'])->name('projects.stories');
 
-        Route::get('/templates', function () {
-            return Inertia::render('Templates/Index');
-        })->name('templates.index');
+        Route::get('/connections', function () {
+            return Inertia::render('Connections/Index');
+        })->name('connections.index');
 
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');
 
         // Integrations
-        Route::post('/pipedream/connect', [\App\Http\Controllers\IntegrationsController::class, 'initializeConnection']);
+        Route::post('/integrations/connect', [\App\Http\Controllers\IntegrationsController::class, 'initializeConnection']);
+
+        Route::get('/integrations/accounts', [\App\Http\Controllers\IntegrationsController::class, 'getAccounts']);
+        Route::get('/integrations/{app}/{account_id}/folders', [\App\Http\Controllers\IntegrationsController::class, 'getIntegrationFolders']);
+//         Route::get('/integrations/hot-folder/files', [\App\Http\Controllers\IntegrationsController::class, 'getIntegrationFolders']);
 
     });
 

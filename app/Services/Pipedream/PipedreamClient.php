@@ -59,15 +59,6 @@ class PipedreamClient
     }
 
     /**
-     * Revoke the access token
-     */
-    public function revokeToken(): void
-    {
-//        Cache::forget('pipedream_access_token');
-        $this->accessToken = null;
-    }
-
-    /**
      * Make an authorized request to the Pipedream API
      */
     public function request(string $method, string $endpoint, array $data = []): array
@@ -92,8 +83,29 @@ class PipedreamClient
     /**
      * Example: Retrieve credentials for user-authenticated apps
      */
-    public function getCredentials(): array
+    public function getCredentials(string $userId): array
     {
         return $this->request('get', 'user/credentials');
+    }
+
+    public function getAccounts(string $userId): array
+    {
+        return $this->request('get', 'accounts/', [
+            'external_user_id' => $userId,
+        ]);
+    }
+     public function getAccount(string $accountId): array
+    {
+        return $this->request('get', 'accounts/' . $accountId, [
+            "include_credentials" => true
+        ]);
+    }
+    public function removeUser(string $external_user_id)
+    {
+        return $this->request('gelete', 'users/'.$external_user_id);
+    }
+    public function disconnectAccount(string $account_id)
+    {
+        return $this->request('delete', '/accounts/'.$account_id);
     }
 }

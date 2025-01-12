@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export function useHelpers() {
     function getInitials(name: string) {
         if (!name) {
@@ -42,5 +44,5 @@ export function useHelpers() {
         return color;
     }
 
-    return { getInitials, colorFromInitials };
+    return { getInitials, colorFromInitials, dayjs };
 }

@@ -17,7 +17,7 @@ const loading = ref(false)
 function getTempToken(app_slug: string){
     loading.value = true
     //
-    axios.post('/pipedream/connect', {
+    axios.post('/integrations/connect', {
       _token: page.props.csrf_token,
         app: app_slug
     })
@@ -38,8 +38,10 @@ function connectToApp(appSlug: string, token: string) {
     pd.connectAccount({
       app: appSlug,
       token,
-      onSuccess: ({ id: accountId }) => {
-        console.log(`Account successfully connected: ${accountId}`)
+      onSuccess: (data) => {
+          console.log('Data returned after connecting', data)
+          console.log(`Account successfully connected: ${data.accountId}`)
+              notification.success({content:`Account for ${appSlug} connected successfully!`, duration: 6000})
       }
     })
 }
@@ -49,11 +51,11 @@ function connectToApp(appSlug: string, token: string) {
 
 <template>
     <n-button-group>
-        <n-button v-for="i in connectionOptions" @click="() => getTempToken(i)" :loading="loading">
+        <n-button v-for="app in connectionOptions" @click="() => getTempToken(app)" :loading="loading">
             <template #icon>
-                <j-icon name="material-symbols:charger-outline" />
+                <j-icon :name="`logos:${app.split('_').join('-')}`" />
             </template>
-            Connect {{i}}
+            {{app.split('_').map(w => w.charAt(0).toUpperCase()+w.slice(1)).join(' ')}}
         </n-button>
     </n-button-group>
 </template>
