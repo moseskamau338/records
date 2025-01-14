@@ -37,6 +37,15 @@ return [
             'throw' => false,
         ],
 
+        'recon_files' => [
+            'driver' => 'local',
+            'root' => storage_path('app/reconciliation'),
+            'serve' => true,
+            'throw' => false,
+            'url' => env('APP_URL').'/recon-files',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -80,6 +89,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('reconciliation') => storage_path('app/reconciliation'),
     ],
 
 ];

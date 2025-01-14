@@ -108,10 +108,10 @@ onMounted(() => {
                                     class="flex flex-row justify-between items-center"
                                 >
                                     <small
-                                        >Last updated:
+                                        >Created:
                                         <i>{{
                                             useHelpers()
-                                                .dayjs(account.updated_at)
+                                                .dayjs(account.created_at)
                                                 .format("DD MMM, YYYY HH:mm")
                                         }}</i></small
                                     >
