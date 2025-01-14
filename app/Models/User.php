@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Team::class, 'id', 'current_team_id');
     }
+
+    public function matches(): BelongsToMany
+    {
+        return $this->belongsToMany(ReconciliationMatch::class);
+    }
 }
