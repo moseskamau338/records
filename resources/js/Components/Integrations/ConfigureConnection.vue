@@ -7,6 +7,7 @@ import {
     NModal,
     NTreeSelect,
     TreeSelectOption,
+    useNotification,
 } from "naive-ui";
 import JIcon from "@/Components/App/JIcon.vue";
 import { onMounted, ref } from "vue";
@@ -19,28 +20,27 @@ interface Props {
 const { account } = defineProps<Props>();
 const emit = defineEmits(["close"]);
 
-const folder = ref<string | null>(null);
+const notification = useNotification();
+const folder = ref<{ key: string; label: string } | null>(null);
 const loading_folders = ref<boolean>(false);
-const initialFolders = ref([]);
-const options = ref([
-    {
-        label: "l-0",
-        key: "v-0",
-        depth: 1,
-        isLeaf: false,
-    },
-]);
+const loading = ref<boolean>(false);
+const initialFolders = ref<{ key: string; label: string }[]>([]);
 
 const show = defineModel<boolean>("show", { default: false });
 
-function getFolders(name?: string) {
+function getFolders(
+    folder_id?: string,
+): Promise<{ id: string; name: string }[]> {
     return new Promise((resolve, reject) => {
         loading_folders.value = true;
         axios
-            .get(`/integrations/${account.app.name_slug}/${account.id}/folders`)
+            .get(
+                `/integrations/${account.app.name_slug}/${account.id}/folders`,
+                {
+                    params: folder_id ? { folder_id } : {},
+                },
+            )
             .then(({ data }) => {
-                console.log("Fetched folders--->", data);
-                initialFolders.value = data;
                 resolve(data);
             })
             .catch((e) => {
@@ -51,30 +51,71 @@ function getFolders(name?: string) {
     });
 }
 
-function getChildren(option: TreeSelectOption) {
+async function getChildren(option: TreeSelectOption) {
     const children = [];
-    for (let i = 0; i <= (option as { depth: number }).depth; ++i) {
+    const folders = await getFolders(option.key as string);
+    for (const folder of folders) {
         children.push({
-            label: `${option.label}-${i}`,
-            key: `${option.label}-${i}`,
-            depth: (option as { depth: number }).depth + 1,
-            isLeaf: option.depth === 3,
+            label: folder.name,
+            key: folder.id,
+            isLeaf: false,
         });
     }
     return children;
 }
 
 function handleLoad(option: TreeSelectOption) {
-    return new Promise<void>((resolve) => {
-        window.setTimeout(() => {
-            option.children = getChildren(option);
-            resolve();
-        }, 1000);
+    return new Promise<void>(async (resolve) => {
+        option.children = await getChildren(option);
+        resolve();
     });
 }
 
-onMounted(() => {
-    getFolders();
+function setHotFolder(): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (!folder.value) {
+            notification.error({
+                content: "Please select a folder",
+                duration: 6000,
+            });
+            return;
+        }
+        loading.value = true;
+        axios
+            .post("/hot-folder/store", {
+                folder: folder.value,
+                app: account.app.name_slug,
+                account_id: account.id,
+            })
+            .then(({ data }) => {
+                notification.success({
+                    content: "Hot folder set successfully!",
+                    duration: 6000,
+                });
+                emit("close");
+                resolve(data);
+            })
+            .catch((e) => {
+                console.log(e);
+                notification.error({
+                    content: e.response
+                        ? e.response.data.message | e.response.data.error
+                        : e.message,
+                    duration: 6000,
+                });
+                reject(e);
+            })
+            .finally(() => (loading.value = false));
+    });
+}
+
+onMounted(async () => {
+    const _ = await getFolders();
+    initialFolders.value = _.map((f) => ({
+        key: f.id,
+        label: f.name,
+        isLeaf: false,
+    }));
 });
 </script>
 
@@ -87,17 +128,17 @@ onMounted(() => {
         size="small"
         closable
         class="max-w-lg"
+        :loading="loading"
     >
         <n-divider title-placement="left"> 🔥 Setup hot folder </n-divider>
         <n-form-item label="Select folder">
             <n-tree-select
-                v-model:value="folder"
+                :value="folder?.key"
+                :on-update:value="(v, o) => (folder = o)"
                 :loading="loading_folders"
                 block-line
-                checkable
-                :options="options"
+                :options="initialFolders"
                 cascade
-                check-strategy="all"
                 show-path
                 :on-load="handleLoad"
             />
@@ -112,7 +153,14 @@ onMounted(() => {
         </n-button>
 
         <div class="flex flex-row space-x-2 justify-end">
-            <n-button size="small" @click="emit('close')"> Done </n-button>
+            <n-button
+                size="small"
+                :disabled="!folder || loading"
+                @click="setHotFolder"
+                :loading="loading"
+            >
+                Save settings
+            </n-button>
         </div>
     </n-modal>
 </template>

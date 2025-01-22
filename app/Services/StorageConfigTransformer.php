@@ -22,7 +22,7 @@ class StorageConfigTransformer
             'google' => [
                 'driver' => 'google',
                 'clientId' => $payload['credentials']['oauth_client_id'] ?? throw new \InvalidArgumentException("clientId is required for Google Drive"),
-                'clientSecret' => $payload['credentials']['oauth_access_token'] ?? throw new \InvalidArgumentException("clientSecret is required for Google Drive"),
+                'accessToken' => $payload['credentials']['oauth_access_token'] ?? throw new \InvalidArgumentException("accessToken is required for Google Drive"),
                 'refreshToken' => $payload['credentials']['oauth_refresh_token'] ?? throw new \InvalidArgumentException("refreshToken is required for Google Drive"),
             ],
             'dropbox' => [

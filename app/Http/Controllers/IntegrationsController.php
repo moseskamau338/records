@@ -52,24 +52,31 @@ class IntegrationsController extends Controller
             ], 500);
         }
     }
-    public function getIntegrationFolders(string $app, string $account_id, PipedreamClient $pipedream)
+
+    /**
+    This function is used to get the folders in the Any account as provided in the params
+     * It retrieve credentials via Pipedream and builds a disk dynamically
+     * It then lists the files in the root directory (or specify a folder)
+     */
+    public function getIntegrationFolders(string $app, string $account_id,Request $request, PipedreamClient $pipedream)
     {
          try {
-             $payload = $pipedream->getAccount($account_id);
+             if(!$request->has('folder_id')) {
+                 $payload = $pipedream->getAccount($account_id);
+                 $user = auth()->user();
+                 $user->pipedream_account_credentials = $payload;
+                 $user->save();
+             }
+
             // Transform the payload into the required configuration
-            $config = StorageConfigTransformer::transform($app, $payload);
+            $config = StorageConfigTransformer::transform($app, auth()->user()->pipedream_account_credentials);
 
-            info('--- Pipedream account payload ready -----', ['config' => $config]);
+            // initialise drive service
+             $driveClient = new GoogleDriveService($config['accessToken']);
 
-            // Build the disk dynamically
-             $_drive = new GoogleDriveService($config);
-            $disk = $_drive->getClient();
+            $folders = $request->has('folder_id') ? $driveClient->listSubFolders($request->query('folder_id')) : $driveClient->listFolders();
 
-
-            // List files in the root directory (or specify a folder)
-            $files = $disk->listContents('/My Drive');
-
-            return response()->json($files);
+            return response()->json($folders);
         } catch (\InvalidArgumentException $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         } catch (FilesystemException $e) {

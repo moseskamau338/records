@@ -63,6 +63,8 @@ Route::middleware([
 
         Route::get('/integrations/accounts', [\App\Http\Controllers\IntegrationsController::class, 'getAccounts']);
         Route::get('/integrations/{app}/{account_id}/folders', [\App\Http\Controllers\IntegrationsController::class, 'getIntegrationFolders']);
+
+        Route::post('/hot-folder/store', [\App\Http\Controllers\TenantHotFolderController::class, 'store']);
 //         Route::get('/integrations/hot-folder/files', [\App\Http\Controllers\IntegrationsController::class, 'getIntegrationFolders']);
 
     });
