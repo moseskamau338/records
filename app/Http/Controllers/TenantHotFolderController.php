@@ -25,6 +25,7 @@ class TenantHotFolderController extends Controller
                     [
                         'app'    => $request->app,
                         'folder' => $request->folder,
+                        'cron_string' => $request->cron_string
                     ]
                 );
 

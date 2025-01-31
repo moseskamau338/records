@@ -19,6 +19,19 @@ import JIcon from "@/Components/App/JIcon.vue";
 import { DataSource } from "@/types";
 import ConfigureConnection from "@/Components/Integrations/ConfigureConnection.vue";
 
+interface Props {
+    hotFolders: {
+        id: string;
+        account_id: string;
+        app: string;
+        folder: string;
+        created_at: string;
+        updated_at: string;
+    }[];
+}
+
+const { hotFolders } = defineProps<Props>();
+
 const loading = ref(false);
 const accounts = ref<DataSource[]>([]);
 const selected_account = ref<DataSource | null>(null);
@@ -157,6 +170,10 @@ onMounted(() => {
         <ConfigureConnection
             v-if="selected_account"
             :account="selected_account"
+            :selected-folder="
+                hotFolders?.find((f) => f.account_id === selected_account?.id)
+                    ?.folder
+            "
             :show="show_account_settings"
             @close="toggleShowAccountSettings"
         />

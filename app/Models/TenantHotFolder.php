@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TenantHotFolder extends Model
 {
-    protected $fillable =  ['app', 'account_id', 'folder'];
+    protected $fillable =  ['app', 'account_id', 'folder', 'cron_string'];
 
     /**
      * Get the attributes that should be cast.

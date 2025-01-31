@@ -50,9 +50,7 @@ Route::middleware([
 
         Route::get('/projects/{id}/recon-stories', [\App\Http\Controllers\ProjectController::class, 'stories'])->name('projects.stories');
 
-        Route::get('/connections', function () {
-            return Inertia::render('Connections/Index');
-        })->name('connections.index');
+        Route::get('/connections', [\App\Http\Controllers\IntegrationsController::class, 'showConnections'])->name('connections.index');
 
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');

@@ -3,6 +3,7 @@ import { DataSource } from "@/types";
 import {
     NButton,
     NDivider,
+    NForm,
     NFormItem,
     NModal,
     NTreeSelect,
@@ -12,19 +13,45 @@ import {
 import JIcon from "@/Components/App/JIcon.vue";
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import FrequencyPicker from "@/Components/App/FrequencyPicker.vue";
+import { useNaiveForm } from "@/utils/composables/useNaiveForm";
 
 interface Props {
     account: DataSource;
+    selectedFolder?: { key: string; label: string; isLeaf: boolean } | null;
 }
 
-const { account } = defineProps<Props>();
+interface Model {
+    folder: { key: string; label: string } | null;
+    cron_string: string | undefined;
+}
+
+const { account, selectedFolder } = defineProps<Props>();
 const emit = defineEmits(["close"]);
 
 const notification = useNotification();
-const folder = ref<{ key: string; label: string } | null>(null);
+const model = ref<Model>({
+    folder: null,
+    cron_string: undefined,
+});
 const loading_folders = ref<boolean>(false);
 const loading = ref<boolean>(false);
 const initialFolders = ref<{ key: string; label: string }[]>([]);
+
+const { formRef, rules, onSubmit } = useNaiveForm();
+
+rules.value = {
+    folder: {
+        type: "object",
+        required: true,
+        message: "Please select a folder",
+    },
+    cron_string: {
+        type: "string",
+        required: true,
+        message: "Please select a frequency",
+    },
+};
 
 const show = defineModel<boolean>("show", { default: false });
 
@@ -73,19 +100,21 @@ function handleLoad(option: TreeSelectOption) {
 
 function setHotFolder(): Promise<void> {
     return new Promise((resolve, reject) => {
-        if (!folder.value) {
+        if (!model.value.folder) {
             notification.error({
                 content: "Please select a folder",
                 duration: 6000,
             });
             return;
         }
+
         loading.value = true;
         axios
             .post("/hot-folder/store", {
-                folder: folder.value,
+                folder: model.value.folder,
                 app: account.app.name_slug,
                 account_id: account.id,
+                cron_string: model.value.cron_string,
             })
             .then(({ data }) => {
                 notification.success({
@@ -110,6 +139,15 @@ function setHotFolder(): Promise<void> {
 }
 
 onMounted(async () => {
+    // utilize prop if exists
+    if (selectedFolder) {
+        model.value.folder = {
+            key: selectedFolder.key,
+            label: selectedFolder.label,
+        };
+    }
+
+    // get new folders
     const _ = await getFolders();
     initialFolders.value = _.map((f) => ({
         key: f.id,
@@ -130,38 +168,53 @@ onMounted(async () => {
         class="max-w-lg"
         :loading="loading"
     >
-        <n-divider title-placement="left"> 🔥 Setup hot folder </n-divider>
-        <n-form-item label="Select folder">
-            <n-tree-select
-                :value="folder?.key"
-                :on-update:value="(v, o) => (folder = o)"
-                :loading="loading_folders"
-                block-line
-                :options="initialFolders"
-                cascade
-                show-path
-                :on-load="handleLoad"
-            />
-        </n-form-item>
+        <n-form
+            ref="formRef"
+            :model="model"
+            :rules="rules"
+            @submit.prevent="() => onSubmit(setHotFolder)"
+        >
+            <n-divider title-placement="left"> 🔥 Setup hot folder </n-divider>
+            <n-form-item label="Select folder" path="folder">
+                <n-tree-select
+                    :value="model.folder?.key"
+                    :on-update:value="(v, o) => (model.folder = o)"
+                    :loading="loading_folders"
+                    block-line
+                    :options="initialFolders"
+                    cascade
+                    show-path
+                    :on-load="handleLoad"
+                />
+            </n-form-item>
 
-        <n-divider title-placement="left"> Danger </n-divider>
-        <n-button type="error" ghost size="small">
-            <template #icon>
-                <j-icon name="material-symbols-light:power-plug-off" />
-            </template>
-            Delete connection
-        </n-button>
+            <n-form-item :show-label="false" path="cron_string">
+                <FrequencyPicker
+                    v-model:cron-expression="model.cron_string"
+                    label="Set syncronization frequency"
+                />
+            </n-form-item>
 
-        <div class="flex flex-row space-x-2 justify-end">
-            <n-button
-                size="small"
-                :disabled="!folder || loading"
-                @click="setHotFolder"
-                :loading="loading"
-            >
-                Save settings
+            <n-divider title-placement="left"> Danger </n-divider>
+            <n-button type="error" ghost size="small">
+                <template #icon>
+                    <j-icon name="material-symbols-light:power-plug-off" />
+                </template>
+                Delete connection
             </n-button>
-        </div>
+
+            <div class="flex flex-row space-x-2 justify-end">
+                <n-button
+                    type="primary"
+                    attr-type="submit"
+                    size="small"
+                    :disabled="!model.folder || loading"
+                    :loading="loading"
+                >
+                    Save settings
+                </n-button>
+            </div>
+        </n-form>
     </n-modal>
 </template>
 

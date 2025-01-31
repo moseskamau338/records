@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TenantHotFolder;
 use App\Services\GoogleDriveService;
 use App\Services\Pipedream\PipedreamClient;
 use App\Services\StorageConfigTransformer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 use League\Flysystem\FilesystemException;
 
 class IntegrationsController extends Controller
@@ -83,5 +84,13 @@ class IntegrationsController extends Controller
               return response()->json(['error' => $e->getMessage()], 400);
          }
 
+    }
+
+    // pages
+    public function showConnections(Request $request): \Inertia\Response
+    {
+        return Inertia::render('Connections/Index', [
+            "hotFolders" => TenantHotFolder::all()
+        ]);
     }
 }
